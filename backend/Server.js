@@ -9,7 +9,7 @@ const io = socketIo(server);
 app.use(express.static('public'));
 
 // Root endpoint
-app.get('/', (req, res) => {
+app.get('/g', (req, res) => {
   res.sendFile(
     path.join(__dirname, public, 'index.html')
   );
