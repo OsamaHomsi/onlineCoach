@@ -11,7 +11,7 @@ app.use(express.static('public'));
 // Root endpoint
 app.get('/', (req, res) => {
   res.sendFile(
-    path.join(__dirname, public, 'index.html')
+    path.join(__dirname, 'public', 'index.html')
   );
 });
 
