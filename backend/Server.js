@@ -10,7 +10,9 @@ app.use(express.static('public'));
 
 // Root endpoint
 app.get('/', (req, res) => {
-  res.send('Server is running');
+  res.sendFile(
+    path.join(__dirname, public, 'index.html')
+  );
 });
 
 // Socket.IO connection
