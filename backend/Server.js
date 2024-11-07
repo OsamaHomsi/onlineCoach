@@ -5,6 +5,15 @@ const app = express();
 const server = http.createServer(app);
 const io = socketIo(server);
 
+// Middleware to serve static files
+app.use(express.static('public'));
+
+// Root endpoint
+app.get('/', (req, res) => {
+  res.send('Server is running');
+});
+
+// Socket.IO connection
 io.on('connection', (socket) => {
   console.log('New client connected');
 
@@ -23,15 +32,19 @@ io.on('connection', (socket) => {
   });
 
   // User sends a message
-  socket.on('sendMessage', (groupId, message) => {
+  socket.on('sendMessage', (data) => {
+    const { groupId, message } = data;
     io.to(groupId).emit('message', message);
   });
 
+  // Handle disconnection
   socket.on('disconnect', () => {
     console.log('Client disconnected');
   });
 });
 
-server.listen(3000, () =>
-  console.log('Server running on port 3000')
-);
+// Start server on port 3000
+const PORT = process.env.PORT || 3000;
+server.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});
